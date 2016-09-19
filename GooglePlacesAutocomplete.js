@@ -85,7 +85,9 @@ const GooglePlacesAutocomplete = React.createClass({
     nearbyPlacesAPI: React.PropTypes.string,
     filterReverseGeocodingByTypes: React.PropTypes.array,
     predefinedPlacesAlwaysVisible: React.PropTypes.bool,
-    enableEmptySections: React.PropTypes.bool
+    enableEmptySections: React.PropTypes.bool,
+    customTextInput: React.PropTypes.element,
+    customTextInputProps: React.PropTypes.object
   },
 
   getDefaultProps() {
@@ -565,6 +567,9 @@ const GooglePlacesAutocomplete = React.createClass({
   },
   render() {
     let { onChangeText, onFocus, ...userProps } = this.props.textInputProps;
+    
+    let Input = this.props.customTextInput ? this.props.customTextInput : TextInput;
+    
     return (
       <View
         style={[defaultStyles.container, this.props.styles.container]}
@@ -572,8 +577,9 @@ const GooglePlacesAutocomplete = React.createClass({
         <View
           style={[defaultStyles.textInputContainer, this.props.styles.textInputContainer]}
         >
-          <TextInput
+          <Input
             { ...userProps }
+            { ...customTextInputProps }
             ref="textInput"
             autoFocus={this.props.autoFocus}
             style={[defaultStyles.textInput, this.props.styles.textInput]}
